@@ -18,6 +18,12 @@ export default function MovieCard (props) {
     navigate(`/movies/${move.id}`)
   }
 
+
+
+  const saveClick = () => {
+    props.addToSavedList(move)
+  }
+
   //once clicked, aka URL is updated, fetch add. user data
   useEffect(() => {
     if (id) {
@@ -69,7 +75,7 @@ export default function MovieCard (props) {
               {star}
             </div>
           ))}
-          <div className="save-button">Save</div>
+          <div className="save-button" onClick={saveClick}>Save</div>
         </div>
       )
     }
