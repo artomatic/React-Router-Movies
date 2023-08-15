@@ -43,10 +43,10 @@ export default function MovieCard (props) {
 
     <h2>{move.title}</h2>
     <div className="movie-director">
-      Director: <em>{move.director}</em>
+      Director: <em>{props.movie.director}</em>
     </div>
     <div className="movie-metascore">
-      Metascore: <strong>{move.metascore}</strong>
+      Metascore: <strong>{props.movie.metascore}</strong>
     </div>
     
 
