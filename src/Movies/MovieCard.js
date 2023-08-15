@@ -7,46 +7,56 @@ export default function MovieCard (props) {
 
   
   let {id} = useParams();
-  const [move, setMove] = useState(props.movie)
+  const [move, setMove] = useState()
 
   
 
   //change the URL id when a movie is clicked
   const navigate = useNavigate()
   const movieClick = () => {
-    console.log('navigating to movie')
+    console.log(`navigating to movie ${id}`)
     navigate(`/movies/${move.id}`)
   }
 
   //once clicked, aka URL is updated, fetch add. user data
   useEffect(() => {
+    if (id) {
+    
     axios
       .get(`http://localhost:5001/api/movies/${id}`)
       .then(response => {
-        console.log(`fetching selected movie for ${id}`)
+        // console.log(`fetching id ${id}`, response)
         setMove(response.data)
+        // console.log(move)
       })
       .catch(error => {
         console.error(error);
       });
+    }
+
+    else {
+      setMove(props.movie)
+    }
+
+    console.log(move)
+
   }, [id]);
 
 
-  return (
+  if (!move) return ('move not set')
 
-    
+  return (
       
     <>
-    {console.log(id)}
     <div className="movie-card" onClick={movieClick}>
 
 
     <h2>{move.title}</h2>
     <div className="movie-director">
-      Director: <em>{props.movie.director}</em>
+      Director: <em>{move.director}</em>
     </div>
     <div className="movie-metascore">
-      Metascore: <strong>{props.movie.metascore}</strong>
+      Metascore: <strong>{move.metascore}</strong>
     </div>
     
 
@@ -54,7 +64,6 @@ export default function MovieCard (props) {
       (
         <div>
           <h3>Actors</h3>
-          {console.log(move.stars)}
           {move.stars.map(star => (
             <div key={star} className="movie-star">
               {star}
@@ -68,8 +77,6 @@ export default function MovieCard (props) {
 
   </div>
   </>
-
-      
 
 
   )
